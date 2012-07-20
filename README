@@ -1,0 +1,8 @@
+«PoC» d'un gestionnaire permettant de gérer un dhcpd depuis une interface web.
+
+Objectif à terme
+----------------
+-> Gérer plus facilement les attributions DHCP en s'affranchissant de l'édition du fichier de conf.
+-> Stats
+-> Possibilité de définir des dates de clôtures des attributions
+-> Repérer les IPs libres.
