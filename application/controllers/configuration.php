@@ -68,7 +68,16 @@ class Configuration extends MY_Controller {
                 $vlans = $this->mvlans->getAllFromPartages($row->idreseaux_partages);
                 foreach ($vlans->result() as $vlan) {
                     $partages = $partages . "\n\t# " . $vlan->Commentaire . "\n\tsubnet " . $vlan->IP . " netmask " . $vlan->Netmask . " {";
-                    //options
+                    $partages = $partages . "\n" .$vlan->options_vlans;
+                    if($vlan->DNS_1!=""){
+                        $partages = $partages. "\n option domain-name-servers ".$vlan->DNS_1;
+                        if($vlan->DNS_1!=""){
+                            $partages = $partages. ",".$vlan->DNS_2;
+                        }
+                        
+                        $partages = $partages.";";
+                        
+                    }
                     $partages = $partages . "\n\t}\n";
                 }
             }
@@ -85,6 +94,15 @@ class Configuration extends MY_Controller {
             foreach ($query->result() as $row) {
                 $subnets = $subnets . "\n# " . $row->Commentaire . "\nsubnet " . $row->IP . " netmask " . $row->Netmask . " {";
                 $subnets = $subnets . $row->options_vlans;
+                 if($vlan->DNS_1!=""){
+                        $partages = $partages. "\n option domain-name-servers ".$vlan->DNS_1;
+                        if($vlan->DNS_1!=""){
+                            $partages = $partages. ",".$vlan->DNS_2;
+                        }
+                        
+                        $partages = $partages.";";
+                        
+                    }
                 $subnets = $subnets . "\n}\n";
             }
         }
