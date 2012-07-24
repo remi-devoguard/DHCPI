@@ -14,6 +14,7 @@ class Vlans extends MY_Controller {
         $this->grocery_crud->set_subject('Vlan');
         $this->grocery_crud->set_relation('reseaux_partages', 'reseaux_partages', 'Nom');
         $this->grocery_crud->unset_texteditor('options_vlans', 'full_text');
+        $this->grocery_crud->unset_columns('Netmask', 'options_vlans');
         $this->grocery_crud->required_fields('IP', 'Netmask');
         $output = $this->grocery_crud->render();
         $this->load->view('main.php', $output);
