@@ -68,15 +68,14 @@ class Configuration extends MY_Controller {
                 $vlans = $this->mvlans->getAllFromPartages($row->idreseaux_partages);
                 foreach ($vlans->result() as $vlan) {
                     $partages = $partages . "\n\t# " . $vlan->Commentaire . "\n\tsubnet " . $vlan->IP . " netmask " . $vlan->Netmask . " {";
-                    $partages = $partages . "\n" .$vlan->options_vlans;
-                    if($vlan->DNS_1!=""){
-                        $partages = $partages. "\n option domain-name-servers ".$vlan->DNS_1;
-                        if($vlan->DNS_1!=""){
-                            $partages = $partages. ",".$vlan->DNS_2;
+                    $partages = $partages . "\n" . $vlan->options_vlans;
+                    if ($vlan->DNS_1 != "") {
+                        $partages = $partages . "\noption domain-name-servers " . $vlan->DNS_1;
+                        if ($vlan->DNS_2 != "") {
+                            $partages = $partages . "," . $vlan->DNS_2;
                         }
-                        
-                        $partages = $partages.";";
-                        
+
+                        $partages = $partages . ";";
                     }
                     $partages = $partages . "\n\t}\n";
                 }
@@ -89,20 +88,19 @@ class Configuration extends MY_Controller {
     private function declareSubnets() {
         $subnets = "\n\n# Déclaration des Subnets #\n";
         if ($this->db->count_all('vlans') > 0) {
-            $query = $this->mvlans->getEmptyShare();
+            $vlans = $this->mvlans->getEmptyShare();
 
-            foreach ($query->result() as $row) {
-                $subnets = $subnets . "\n# " . $row->Commentaire . "\nsubnet " . $row->IP . " netmask " . $row->Netmask . " {";
-                $subnets = $subnets . $row->options_vlans;
-                 if($vlan->DNS_1!=""){
-                        $partages = $partages. "\n option domain-name-servers ".$vlan->DNS_1;
-                        if($vlan->DNS_1!=""){
-                            $partages = $partages. ",".$vlan->DNS_2;
-                        }
-                        
-                        $partages = $partages.";";
-                        
+            foreach ($vlans->result() as $vlan) {
+                $subnets = $subnets . "\n# " . $vlan->Commentaire . "\nsubnet " . $vlan->IP . " netmask " . $vlan->Netmask . " {";
+                $subnets = $subnets ."\n". $vlan->options_vlans;
+                if ($vlan->DNS_1 != "") {
+                    $subnets = $subnets . "\noption domain-name-servers " . $vlan->DNS_1;
+                    if ($vlan->DNS_2 != "") {
+                        $subnets = $subnets . "," . $vlan->DNS_2;
                     }
+
+                    $subnets = $subnets . ";";
+                }
                 $subnets = $subnets . "\n}\n";
             }
         }
