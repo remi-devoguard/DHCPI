@@ -39,12 +39,11 @@ class Configuration extends MY_Controller {
         }
 
         fclose($fh);
+        $this->restartService();
         redirect();
     }
 
     private function declareDefault() {
-        //récupérer toutes les options depuis la table de configuration.
-        //return "deny client-updates;\ndeny unknown-clients;\nddns-update-style none;";
 
         $query = $this->mconfiguration->get();
         $default = "# Fichier généré automatiquement par DHCPI #\n# Ne pas modifier manuellement ! #\n\n";
@@ -92,7 +91,7 @@ class Configuration extends MY_Controller {
 
             foreach ($vlans->result() as $vlan) {
                 $subnets = $subnets . "\n# " . $vlan->Commentaire . "\nsubnet " . $vlan->IP . " netmask " . $vlan->Netmask . " {";
-                $subnets = $subnets ."\n". $vlan->options_vlans;
+                $subnets = $subnets . "\n" . $vlan->options_vlans;
                 if ($vlan->DNS_1 != "") {
                     $subnets = $subnets . "\noption domain-name-servers " . $vlan->DNS_1;
                     if ($vlan->DNS_2 != "") {
@@ -122,8 +121,20 @@ class Configuration extends MY_Controller {
         return $hosts;
     }
 
-    public function restartService() {
-        exec("sudo /etc/init.d/isc-dhcp-server restart");
+    private function restartService() {
+        shell_exec("sudo /etc/init.d/isc-dhcp-server restart");
     }
+    
+        
+    public function getDHCPstate() {
+        $state = shell_exec("pidof dhcpd");echo $state;
+        if ($state != "") {
+            return "success";
+            
+        } else {
+            return "alert";
+        }
+    }
+
 
 }

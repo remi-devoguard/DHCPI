@@ -77,6 +77,7 @@
 
 
                 <div class="twelve columns">
+                    
                     <dl class="nice contained tabs">
                         <dd><a href="<?php echo site_url('machines') ?>" <?php if ($this->uri->segment(1) == "machines") echo 'class="active"'; ?>>Machines</a></dd>
                         <dd><a href="<?php echo site_url('vlans') ?>"<?php if ($this->uri->segment(1) == "vlans") echo 'class="active"'; ?>>Vlans</a></dd>
