@@ -8,10 +8,18 @@ class MY_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('grocery_CRUD');
-
-        include_once('CAS.php');
-        phpCAS::client('2.0', 'cas.uhp-nancy.fr', 443, '/cas', false);
-        phpCAS::setNoCasServerValidation();
-        phpCAS::handleLogoutRequests(false);
+        //$this->output->enable_profiler(TRUE);
+         $this->ci = & get_instance();
+         session_start();
+        if(!$this->isLogged() && $this->ci->uri->segment(1)!='login'){redirect(site_url('login'), 'refresh');}
+    }
+    
+    
+    private function isLogged() {
+        if (isset($_SESSION['User'])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
