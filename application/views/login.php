@@ -10,7 +10,7 @@
 
         <!-- Set the viewport width to device width for mobile -->
         <meta name="viewport" content="width=device-width" />
-
+        <link rel="shortcut icon" href=<?php echo base_url("images/favicon.ico"); ?> type="image/x-icon" />
         <title>DHCPI</title>
 
         <!-- Included CSS Files -->
