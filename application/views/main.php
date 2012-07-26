@@ -84,6 +84,7 @@
                         <dd><a href="<?php echo site_url('partages') ?>"<?php if ($this->uri->segment(1) == "partages") echo 'class="active"'; ?>>Réseaux Partagés</a></dd>
                         <dd><a href="<?php echo site_url('utilisateurs') ?>"<?php if ($this->uri->segment(1) == "utilisateurs") echo 'class="active"'; ?>>Utilisateurs</a></dd>
                         <dd><a href="<?php echo site_url('configuration') ?>"<?php if ($this->uri->segment(1) == "configuration") echo 'class="active"'; ?>>Options Globales</a></dd>
+                        <dd><a href="<?php echo site_url('login/logout') ?>">Logout</a></dd>
                     </dl>
 
                     <br/>
